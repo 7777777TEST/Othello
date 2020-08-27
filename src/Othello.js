@@ -147,17 +147,24 @@ class Game{
 	stringRepresentation(board){
 		return JSON.stringify(board);
 	}
-	getInput(ev){
+	getInput(ev,player){
 		const tilesize=40;
 		let mx=ev.clientX-ev.target.getBoundingClientRect().left-tilesize/2;
 		let my=ev.clientY-ev.target.getBoundingClientRect().top-tilesize/2;
 		let a=Math.floor(my/tilesize)*this.n+Math.floor(mx/tilesize);
+		console.log(a);
+		if(App.game.getValidMoves(App.board,App.player)[this.n**2]!=0){
+			console.log("pass")
+			return this.n**2;
+		}
+		
+		console.log("not passed")
 		return a;
 	}
 	draw(board,ctx){
 		const tilesize=40;
 		const {w,h}=this.getBoardSize()
-		ctx.clearRect(0,0,(w+1)*tilesize,(h+1)*tilesize);
+		ctx.clearRect(0,0,(w+1)*tilesize,(h+5)*tilesize);
 		ctx.beginPath();
 		ctx.strokeStyle="#000";
 		for(var x=0;x<w;x++){

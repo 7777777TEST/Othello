@@ -17,7 +17,7 @@ const {w,h}=App.game.getBoardSize();
 App.tilesize=40;
 App.player=1;
 App.canvas.width=App.tilesize*(w+1);
-App.canvas.height=App.tilesize*(h+1);
+App.canvas.height=App.tilesize*(h+3);
 App.ctx.lineWidth=1.0;
 App.nnet=new NNetWrapper(App.game,App.args);
 App.nnet.loadPretrained("https://7777777TEST.github.io/Othello/othello-model/model.json").then((e)=>{
@@ -79,8 +79,8 @@ App.canvas.addEventListener("click",(ev)=>{
 		setTimeout(App.compute,100)
 		return;
 	}
-	let a=App.game.getInput(ev);
-	if(a<0||a>=App.game.getActionSize())return;
+	let a=App.game.getInput(ev,App.player);
+	if(a<0||a>App.game.getActionSize())return;
 	if(App.game.getValidMoves(App.board,App.player)[a]!=1)return;
 	App.board=App.game.getNextState(App.board,App.player,a);
 	App.game.draw(App.board,App.ctx);
